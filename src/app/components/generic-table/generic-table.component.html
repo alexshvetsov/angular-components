@@ -1,0 +1,16 @@
+<table class="generic-table">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">
+          {{ column.header }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data">
+        <td *ngFor="let column of columns">
+          <app-table-cell [data]="row[column.key]" [columnType]="column.type"></app-table-cell>
+        </td>
+      </tr>
+    </tbody>
+  </table>
