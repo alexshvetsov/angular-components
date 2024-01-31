@@ -1,15 +1,14 @@
-<div [ngSwitch]="columnType">
-    <ng-container *ngSwitchCase="isCellType('text')">
-      <span>{{ data }}</span>
-    </ng-container>
-    <ng-container *ngSwitchCase="isCellType('number')">
-      <span>{{ data }}</span>
-    </ng-container>
-    <ng-container *ngSwitchCase="isCellType('img')">
-      <img [src]="data" alt="image">
-    </ng-container>
-    <ng-container *ngSwitchCase="isCellType('date')">
-      <span>{{ data | date:'DD/MM/YYYY' }}</span>
-    </ng-container>
-  </div>
-  
+<div [ngSwitch]="columnType" >
+  <ng-container *ngSwitchCase="'text'">
+    <span>{{ data }}</span>
+  </ng-container>
+  <ng-container *ngSwitchCase="'number'">
+    <span>{{ data }}</span>
+  </ng-container>
+  <ng-container *ngSwitchCase="'img'">
+    <img [src]="data" alt="image">
+  </ng-container>
+  <ng-container *ngSwitchCase="'date'">
+    <span>{{ data | date:'dd/MM/yyyy' }}</span>
+  </ng-container>
+</div>

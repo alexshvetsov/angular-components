@@ -1,0 +1,11 @@
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+  <span>{{ column.header }}</span>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <ng-container *ngIf="!sorted || isAsc">
+      <span (click)="handleSortingButton()">&#11165;</span>
+    </ng-container>
+    <ng-container *ngIf="!sorted || !isAsc">
+      <span (click)="handleSortingButton()">&#11167;</span>
+    </ng-container>
+  </div>
+</div>
