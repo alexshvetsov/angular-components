@@ -13,6 +13,10 @@ export class GenericTableService {
     new BehaviorSubject<SortingStatus>({} as SortingStatus);
   private _pagination$: BehaviorSubject<Pagination | null> =
     new BehaviorSubject<Pagination | null>(null);
+  private _pageNumber$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
+  private _itemsPerPage$: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
 
   constructor() {}
 
@@ -21,6 +25,10 @@ export class GenericTableService {
     this.emitSortingStatus(tableConfig.sortingStatus);
     this.emitColumns(tableConfig.columns);
     this.emitPagination(tableConfig.pagination || null);
+    if(tableConfig.pagination) {
+      this.emitPageNumber(tableConfig.pagination.currentPage);
+      this.emitItemsPerPage(tableConfig.pagination.rowsPerPage);
+    }
   }
 
   public getGenericTableConfigAsObs(): Observable<TableConfig> {
@@ -47,4 +55,16 @@ export class GenericTableService {
   public getPaginationAsObs(): Observable<Pagination | null> {
     return this._pagination$.asObservable();
   }
+  public emitPageNumber(pageNumber: number): void {
+    this._pageNumber$.next(pageNumber);
+  }
+  public getPageNumberAsObs(): Observable<number> {
+    return this._pageNumber$.asObservable();
+  }
+  public emitItemsPerPage(itemsPerPage: number): void {
+    this._itemsPerPage$.next(itemsPerPage);
+  } 
+  public getItemsPerPageAsObs(): Observable<number> {
+    return this._itemsPerPage$.asObservable();
+  } 
 }

@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Pagination } from '../../types/table-types';
+import { Observable } from 'rxjs';
+import { GenericTableService } from '../../generic-table.service';
 
 @Component({
   selector: 'app-pagination',
@@ -6,9 +9,27 @@ import { Component, Input } from '@angular/core';
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit {
   @Input() totalPageCount!: number;
+  @Input() totalItemsCount!: number;
   @Input() currentPage!: number;
+  @Input() rowsPerPage!: number;
+  pagination$: Observable<Pagination | null> =
+    this.tableService.getPaginationAsObs();
+  selectedOption!: number;
+  options = [10, 20, 30, 40];
 
-  constructor() {}
+  constructor(private tableService: GenericTableService) {}
+  ngOnInit(): void {
+    this.selectedOption = this.rowsPerPage;
+  }
+  changePageNumber(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.tableService.emitPageNumber(pageNumber);
+  }
+
+  onSelectedOptionChange(newValue: number): void {
+    this.selectedOption = newValue;
+    this.tableService.emitItemsPerPage(newValue);
+  }
 }

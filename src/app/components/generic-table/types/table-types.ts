@@ -5,8 +5,10 @@ export enum TableSorting {
 }
 
 export interface Pagination {
-  totalCount: number;
+  totalPageCount: number;
+  totalItemsCount: number;
   currentPage: number;
+  rowsPerPage: number;
 }
 
 export interface SortingStatus {

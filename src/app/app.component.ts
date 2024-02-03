@@ -9,7 +9,7 @@ import {
   TableSorting,
 } from './components/generic-table/types/table-types';
 import { GenericTableService } from './components/generic-table/generic-table.service';
-import { BehaviorSubject, skip } from 'rxjs';
+import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, skip } from 'rxjs';
 import { CommonModule } from '@angular/common';
 interface TableData {
   firstName: string;
@@ -98,19 +98,26 @@ export class AppComponent implements AfterViewInit {
         column: 'id',
       },
       pagination: {
-        totalCount: 1,
-        currentPage: 4,
+        totalPageCount: 4,
+        currentPage: 2,
+        totalItemsCount: 10,
+        rowsPerPage: 10,
       },
     };
     this.genericTableService = this.tableComponent.getService();
     this.genericTableService.emitTableConfig(this.config);
 
-    this.genericTableService
-      .getSortingStatusAsObs()
-      .pipe(skip(1))
-      .subscribe((status) => {
-        const random = Math.floor(Math.random() * 4);
-        this.data.next([this.rows[random]]);
-      });
+    combineLatest([
+      this.genericTableService.getSortingStatusAsObs(),
+      this.genericTableService.getItemsPerPageAsObs(),
+      this.genericTableService.getPageNumberAsObs(),
+    ]).pipe(
+      skip(1)).subscribe(([sortingStatus, itemsPerPage, pageNumber]) => {
+      console.log('sortingStatus', sortingStatus);
+      console.log('itemsPerPage', itemsPerPage);
+      console.log('pageNumber', pageNumber);
+      const random = Math.floor(Math.random() * 4);
+      this.data.next([this.rows[random]]);
+    });
   }
 }

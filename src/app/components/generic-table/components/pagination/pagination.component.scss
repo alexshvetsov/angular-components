@@ -1,4 +1,20 @@
-.contianer{
-    height: 40px;
+.contianer {
+  box-sizing: border-box;
+  padding: 10px 0;
+  height: 40px;
 
+  .page-number {
+    box-sizing: border-box;
+    padding: 5px;
+    border: 3px solid black;
+  }
+  .active-page {
+    font-weight: bold;
+    color: #ff0000; 
+
+  }
+  .page-number:hover {
+    background-color: #f0f0f0;
+  }
+  
 }

@@ -29,11 +29,13 @@
     </table>
   </div>
 
-  <!-- <ng-container *ngIf="pagination$ | async as pagination">
+  <ng-container *ngIf="pagination$ | async as pagination">
     <app-pagination
       class="container__pagination"
-      [totalPageCount]="pagination.totalCount"
-      [currentPage]="pagination.currentPage"
+      [totalPageCount]="(pagination$ | async)?.totalPageCount!"
+      [totalItemsCount]="(pagination$ | async)?.totalItemsCount!"
+      [currentPage]="(pagination$ | async)?.currentPage!"
+      [rowsPerPage]="(pagination$ | async)?.rowsPerPage!"
     />
-  </ng-container> -->
+  </ng-container>
 </div>
