@@ -1,0 +1,30 @@
+/* foldable-card.component.scss */
+.card {
+  box-sizing: border-box;
+  max-height: 200px;
+  border: 1px solid #ccc;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.card.folded {
+  max-height: 25px; /* Adjust based on header size */
+}
+
+.card-header {
+  height: 25px;
+  background-color: #f0f0f0;
+  padding: 4px;
+  p {
+    margin: 0;
+  }
+  span {
+    cursor: pointer;
+  }
+}
+
+.card-body {
+  padding: 10px;
+}

@@ -17,10 +17,10 @@ export class TableHeaderComponent {
   constructor(private genericTableService: GenericTableService) {}
 
   handleSortingButton(): void {
-    this.genericTableService.emitSortingStatus({
+    this.genericTableService.sortingStatus.value$={
       column: this.column.key,
       isASC: !this.isAsc,
       sorted: true,
-    });
+    };
   }
 }

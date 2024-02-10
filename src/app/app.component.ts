@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GenericTableModule } from './components/generic-table.module';
+import { GenericTableModule } from './components/generic-table/generic-table.module';
 import { Column } from './components/generic-table/types/columns';
 import { TableConfig } from './components/generic-table/types/table';
 import { GenericTableComponent } from './components/generic-table/generic-table.component';
@@ -11,6 +11,7 @@ import {
 import { GenericTableService } from './components/generic-table/generic-table.service';
 import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, skip } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FoldableCardComponent } from './components/foldable-card/foldable-card.component';
 interface TableData {
   firstName: string;
   lastName: string;
@@ -21,7 +22,7 @@ interface TableData {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GenericTableModule, CommonModule],
+  imports: [RouterOutlet, GenericTableModule, CommonModule, FoldableCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -105,19 +106,18 @@ export class AppComponent implements AfterViewInit {
       },
     };
     this.genericTableService = this.tableComponent.getService();
-    this.genericTableService.emitTableConfig(this.config);
+    this.genericTableService.initTable(this.config);
 
-    combineLatest([
-      this.genericTableService.getSortingStatusAsObs(),
-      this.genericTableService.getItemsPerPageAsObs(),
-      this.genericTableService.getPageNumberAsObs(),
-    ]).pipe(
-      skip(1)).subscribe(([sortingStatus, itemsPerPage, pageNumber]) => {
-      console.log('sortingStatus', sortingStatus);
-      console.log('itemsPerPage', itemsPerPage);
-      console.log('pageNumber', pageNumber);
+ this.genericTableService.getTableEvents().pipe(
+      skip(1)).subscribe(([sortingStatus, itemsPerPage, pageNumber,searchValue,filters]) => {
+      console.log('filters', filters);
       const random = Math.floor(Math.random() * 4);
       this.data.next([this.rows[random]]);
     });
   }
+
+ filterUpdate($event:any):void{
+  console.log('filterUpdate',$event.target.value);
+  this.genericTableService.filters.value$ = {s:$event.target.value}; 
+ }
 }

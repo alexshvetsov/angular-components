@@ -22,14 +22,12 @@ export class GenericTableComponent<T extends { [key: string]: any }>
   implements OnInit
 {
   @Input() data!: Partial<T>[] | null;
-  tableConfig$: Observable<TableConfig> =
-    this.genericTableService.getGenericTableConfigAsObs();
   storingStatus$: Observable<SortingStatus> =
-    this.genericTableService.getSortingStatusAsObs();
-  columns$: Observable<Column[]> = this.genericTableService.getColumnsAsObs();
+    this.genericTableService.sortingStatus.value$;
+  columns$: Observable<Column[]> = this.genericTableService.columns.value$;
 
   pagination$: Observable<Pagination | null> =
-    this.genericTableService.getPaginationAsObs();
+    this.genericTableService.pagination.value$;
 
   constructor(private genericTableService: GenericTableService) {}
 

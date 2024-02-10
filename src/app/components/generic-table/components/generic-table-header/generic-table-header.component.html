@@ -1,0 +1,13 @@
+<div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="container__data">dsfasfasd</div>
+    <div class="container__filters" fxFlex="40" fxLayout="row">
+      <input type="text" placeholder="חיפוש" [formControl]="searchControl" name="search"/>
+      <p (click)="toggleTooltip($event)">חיפוש מתקדם</p>
+      <!-- export this logic into directive of the tooltip -->
+      <div *ngIf="tooltipOpen" class="tooltip-content" #tooltipRef>
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+  
+<div *ngIf="tooltipOpen" class="overlay" (click)="closeTooltip()"></div>

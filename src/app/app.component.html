@@ -1,3 +1,15 @@
 <div class="container">
-    <app-generic-table  [data]="data | async"/>
+  <app-generic-table [data]="data | async"
+    ><div>
+      <app-foldable-card
+        >
+        <select (change)="filterUpdate($event)">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <input type="text" placeholder="Enter a value" (change)="filterUpdate($event)"/>
+      </app-foldable-card>
+    </div>
+  </app-generic-table>
 </div>

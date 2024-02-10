@@ -15,7 +15,7 @@ export class PaginationComponent implements OnInit {
   @Input() currentPage!: number;
   @Input() rowsPerPage!: number;
   pagination$: Observable<Pagination | null> =
-    this.tableService.getPaginationAsObs();
+    this.tableService.pagination.value$;
   selectedOption!: number;
   options = [10, 20, 30, 40];
 
@@ -25,11 +25,11 @@ export class PaginationComponent implements OnInit {
   }
   changePageNumber(pageNumber: number): void {
     this.currentPage = pageNumber;
-    this.tableService.emitPageNumber(pageNumber);
+    this.tableService.pageNumber.value$ = pageNumber;
   }
 
   onSelectedOptionChange(newValue: number): void {
     this.selectedOption = newValue;
-    this.tableService.emitItemsPerPage(newValue);
+    this.tableService.itemsPerPage.value$ = newValue;
   }
 }

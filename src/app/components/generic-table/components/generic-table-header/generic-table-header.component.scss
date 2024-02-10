@@ -1,0 +1,22 @@
+/* your-component.component.scss */
+.tooltip-content {
+    position: absolute;
+    z-index: 100; /* Ensure it's above other content */
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    top: 120px;
+    left: 120px;
+    /* Positioning and size as needed */
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 50; /* Below the tooltip but above other content */
+  }
+  
