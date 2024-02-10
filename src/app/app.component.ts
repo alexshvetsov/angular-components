@@ -9,9 +9,10 @@ import {
   TableSorting,
 } from './components/generic-table/types/table-types';
 import { GenericTableService } from './components/generic-table/generic-table.service';
-import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, skip } from 'rxjs';
+import { BehaviorSubject, skip } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FoldableCardComponent } from './components/foldable-card/foldable-card.component';
+import { FormModule } from './components/form/form.module';
 interface TableData {
   firstName: string;
   lastName: string;
@@ -22,7 +23,7 @@ interface TableData {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GenericTableModule, CommonModule, FoldableCardComponent],
+  imports: [RouterOutlet, GenericTableModule, CommonModule, FoldableCardComponent, FormModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
