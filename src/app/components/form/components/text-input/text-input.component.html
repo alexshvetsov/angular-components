@@ -1,1 +1,4 @@
-<p>text-input works!</p>
+<mat-form-field appearance="fill">
+  <mat-label>{{ input.label }}</mat-label>
+  <input matInput [formControl]="control" [placeholder]="input.placeholder" />
+</mat-form-field>

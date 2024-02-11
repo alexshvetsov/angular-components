@@ -1,32 +1,18 @@
-// flex-box.directive.ts
-import {
-  Directive,
-  Input,
-  ElementRef,
-  Renderer2,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 import FlexBox from '../types/flex-box';
+import { StyleItemDirective } from './style-item.directive';
 
 @Directive({
   selector: '[appFlexBox]',
 })
-export class FlexBoxDirective implements OnChanges {
+export class FlexBoxDirective extends StyleItemDirective  {
   @Input('appFlexBox') flexConfig!: FlexBox;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['flexConfig']) {
-      this.applyFlexStyles();
-    }
+  get styleConfig(): FlexBox {
+    return this.flexConfig;
   }
 
-  private applyFlexStyles(): void {
-    const element = this.el.nativeElement;
-    Object.entries(this.flexConfig).forEach(([key, value]) => {
-      this.renderer.setStyle(element, key, value);
-    });
+  constructor(el: ElementRef, renderer: Renderer2) {
+    super(el, renderer);
   }
 }

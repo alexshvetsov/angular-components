@@ -1,25 +1,18 @@
-import { Directive, ElementRef, Input, Renderer2, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 import GridItem from '../types/grid-item';
+import { StyleItemDirective } from './style-item.directive';
 
 @Directive({
   selector: '[appGridItem]',
-  standalone: true,
 })
-export class GridItemDirective {
-  @Input('appGridItem') gridConfig!: GridItem;
+export class GridItemDirective extends StyleItemDirective  {
+  @Input('appGridItem') flexConfig!: GridItem;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['gridConfig']) {
-      this.applyFlexStyles();
-    }
+  get styleConfig(): GridItem {
+    return this.flexConfig;
   }
 
-  private applyFlexStyles(): void {
-    const element = this.el.nativeElement;
-    Object.entries(this.gridConfig).forEach(([key, value]) => {
-      this.renderer.setStyle(element, key, value);
-    });
+  constructor(el: ElementRef, renderer: Renderer2) {
+    super(el, renderer);
   }
 }

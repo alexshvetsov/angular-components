@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { TextInput } from '../../types/text-input';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
-  standalone: true,
-  imports: [],
   templateUrl: './text-input.component.html',
-  styleUrl: './text-input.component.scss'
+  styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent {
-
+  @Input() input!: TextInput;
+  @Input() control!:FormControl;
 }

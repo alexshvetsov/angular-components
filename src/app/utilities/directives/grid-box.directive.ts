@@ -1,26 +1,18 @@
-import { Directive, ElementRef, Input, Renderer2, SimpleChanges } from '@angular/core';
-import GridItem from '../types/grid-item';
+import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
+import GridBox from '../types/grid-box';
+import { StyleItemDirective } from './style-item.directive';
 
 @Directive({
   selector: '[appGridBox]',
-  standalone: true
 })
-export class GridBoxDirective {
+export class GridBoxDirective extends StyleItemDirective {
+  @Input('appGridBox') flexConfig!: GridBox;
 
-  @Input('appGridBox') gridConfig!: GridItem;
-
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['gridConfig']) {
-      this.applyFlexStyles();
-    }
+  get styleConfig(): GridBox {
+    return this.flexConfig;
   }
 
-  private applyFlexStyles(): void {
-    const element = this.el.nativeElement;
-    Object.entries(this.gridConfig).forEach(([key, value]) => {
-      this.renderer.setStyle(element, key, value);
-    });
+  constructor(el: ElementRef, renderer: Renderer2) {
+    super(el, renderer);
   }
 }

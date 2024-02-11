@@ -4,6 +4,7 @@ import FlexItem from '../../../utilities/types/flex-item';
 
 export interface BaseInput {
   name: string;
+  value:any;
   type: 'text' | 'number' | 'email' | 'password' | 'select' | 'autocomplete' | 'checkbox' | 'radio';
   placeholder?: string;
   label?: string;

@@ -1,25 +1,18 @@
-import { Directive, ElementRef, Input, Renderer2, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 import FlexItem from '../types/flex-item';
+import { StyleItemDirective } from './style-item.directive';
 
 @Directive({
   selector: '[appFlexItem]',
-  standalone: true
 })
-export class FlexItemDirective {
-  @Input('appFlexBox') flexConfig!: FlexItem;
+export class FlexItemDirective extends StyleItemDirective {
+  @Input('appFlexItem') flexConfig!: FlexItem;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['flexConfig']) {
-      this.applyFlexStyles();
-    }
+  get styleConfig(): FlexItem {
+    return this.flexConfig;
   }
 
-  private applyFlexStyles(): void {
-    const element = this.el.nativeElement;
-    Object.entries(this.flexConfig).forEach(([key, value]) => {
-      this.renderer.setStyle(element, key, value);
-    });
+  constructor(el: ElementRef, renderer: Renderer2) {
+    super(el, renderer);
   }
 }
