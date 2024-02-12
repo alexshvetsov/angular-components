@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { SharedModule } from '../../utilities/modules/shared/shared.module';
 import { InputComponent } from './components/input/input.component';
+import { FormService } from './form.service';
 
 @NgModule({
   declarations: [
@@ -27,5 +28,6 @@ import { InputComponent } from './components/input/input.component';
     SharedModule
   ],
   exports: [FormComponent],
+  providers:[FormService]
 })
 export class FormModule {}

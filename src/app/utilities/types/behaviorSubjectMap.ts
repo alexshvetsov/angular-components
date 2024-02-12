@@ -1,25 +1,34 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SelectOption } from '../../components/form/types/select-input';
 
-export default class BehaviorSubjectMap {
-  private _value:{[key: string]: BehaviorSubject<SelectOption[]>} = {};
+export default class BehaviorSubjectMap<T> {
+  private _subjectsMap: { [key: string]: BehaviorSubject<T> } = {};
 
-  constructor(initialValue: {[key: string]: SelectOption[]}) {
-    Object.keys(initialValue).forEach(key => {
-      this._value[key] = new BehaviorSubject(initialValue[key]);
-    })
-  }
-  
-   getSelectOptions(key: string): Observable<SelectOption[]> {
-    return this._value[key].asObservable();
+  constructor(initialValues: { [key: string]: T }) {
+    Object.entries(initialValues).forEach(([key, value]) => {
+      this._subjectsMap[key] = new BehaviorSubject<T>(value);
+    });
   }
 
-  emitSelectOption(key: string, value: SelectOption[]): void {
-    if (this._value[key]) {
-      this._value[key].next(value);
-    }else{
-      this._value[key] = new BehaviorSubject(value);
+  getValueSliceAsObs(key: string): Observable<T> {
+    if (!this._subjectsMap[key]) {
+      throw new Error(`No BehaviorSubject found for key: ${key}`);
     }
+    return this._subjectsMap[key].asObservable();
   }
 
+  createSbjectMapFromArr(values: T[], key:string): void {
+    values.forEach((value) => {
+      this._subjectsMap[key] = new BehaviorSubject<T>(value);
+    });
+  }
+
+  updateValues(updatedValues: { [key: string]: T }): void {
+    Object.entries(updatedValues).forEach(([key, values]) => {
+      if (this._subjectsMap[key]) {
+        this._subjectsMap[key].next(values);
+      } else {
+        this._subjectsMap[key] = new BehaviorSubject<T>(values);
+      }
+    });
+  }
 }

@@ -1,1 +1,5 @@
-<p>form works!</p>
+<form [formGroup]="formGroup">
+  <ng-container *ngFor="let input of inputs$ | async">
+    <app-input [input]="input" [control]="getFormControl(input.name)" />
+  </ng-container>
+</form>

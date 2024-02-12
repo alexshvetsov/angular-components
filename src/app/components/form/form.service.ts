@@ -1,28 +1,38 @@
 import { Injectable } from '@angular/core';
 import BehaviorSubjectWrapper from '../../utilities/types/behaviorSubjectWrapper';
 import { BaseInput } from './types/base-input';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SelectOption } from './types/select-input';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SelectInput, SelectOption } from './types/select-input';
+import BehaviorSubjectMap from '../../utilities/types/behaviorSubjectMap';
+import { isSelectInput } from './types/type-guard';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
-  _inputs: BehaviorSubjectWrapper<BaseInput[]> = new BehaviorSubjectWrapper<
+  inputs: BehaviorSubjectWrapper<BaseInput[]> = new BehaviorSubjectWrapper<
     BaseInput[]
   >([]);
-  _formGroup: BehaviorSubjectWrapper<FormGroup> =
-    new BehaviorSubjectWrapper<FormGroup>({} as FormGroup);
-  _selectOptions: BehaviorSubjectWrapper<{ [key: string]: SelectOption[] }> =
-    new BehaviorSubjectWrapper<{ [key: string]: SelectOption[] }>({});
+  private _formGroup: FormGroup = {} as FormGroup;
+  selectOptions: BehaviorSubjectMap<SelectOption[]> = new BehaviorSubjectMap<
+    SelectOption[]
+  >({});
 
   constructor(private fb: FormBuilder) {}
-  // add abstract class to DRY the directives code 
-//  consider to create a hash map for inputs like for select options so that input will rerender better
-//  create a data structure like the BSWrapper that holds the name of the input and the BS of value as value and has getter and setter to change spesific input options so that the rerender will be seemless 
-initFormGroup(inputs: BaseInput[]): void {
+  //  consider to create a hash map for inputs like for select options so that input will rerender better consuder making new class to extend tha bsMAp
+
+  get formGroup(): FormGroup {
+    return this.formGroup;
+  }
+  initFormService(inputs: BaseInput[]): void {
     const group: FormGroup = this.fb.group({});
-    const selectOptions: { [key: string]: SelectOption[] } = {};
+    this.initSelectOptions(inputs);
+    this.initControls(inputs, group);
+    this._formGroup = group;
+    this.inputs.value$ = inputs;
+  }
+
+  initControls(inputs: BaseInput[], group: FormGroup): void {
     inputs.forEach((input) => {
       const control = this.fb.control(
         input.defaultValue,
@@ -30,7 +40,17 @@ initFormGroup(inputs: BaseInput[]): void {
       );
       group.addControl(input.name, control);
     });
-    this._formGroup.value$ = group;
-    this._inputs.value$ = inputs;
   }
+
+  initSelectOptions(inputs: BaseInput[]): void {
+    const selectOptions: { [key: string]: SelectOption[] } = {};
+    inputs.forEach((input) => {
+      if (isSelectInput(input)) {
+        selectOptions[input.name] = input.options || [];
+      }
+    });
+    this.selectOptions.updateValues(selectOptions);
+  }
+
+
 }
