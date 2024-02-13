@@ -34,7 +34,7 @@ export class GenericTableComponent<T extends { [key: string]: any }>
   ngOnInit(): void {
     this.data = this.data || [];
   }
-  getService(): GenericTableService {
+  getTableService(): GenericTableService {
     return this.genericTableService;
   }
 }

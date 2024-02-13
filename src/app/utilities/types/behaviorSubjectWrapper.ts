@@ -9,6 +9,9 @@ export default class BehaviorSubjectWrapper<T> {
   public get value$(): Observable<T> {
     return this._value$.asObservable();
   }
+  public get value(): T {
+    return this._value$.value;
+  }
   public set value$(value: T) {
     this._value$.next(value);
   }

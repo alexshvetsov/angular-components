@@ -2,7 +2,7 @@ import { Directive, ElementRef, Renderer2, OnChanges, SimpleChanges } from '@ang
 
 @Directive()
 export abstract class StyleItemDirective implements OnChanges {
-  abstract get styleConfig(): { [key: string]: any };
+  abstract get styleConfig(): { [key: string]: any } | undefined ;
 
   constructor(protected el: ElementRef, protected renderer: Renderer2) {}
 
@@ -14,7 +14,7 @@ export abstract class StyleItemDirective implements OnChanges {
 
   protected applyStyles(): void {
     const element = this.el.nativeElement;
-    Object.entries(this.styleConfig).forEach(([key, value]) => {
+    this.styleConfig && Object.entries(this.styleConfig).forEach(([key, value]) => {
       this.renderer.setStyle(element, key, value);
     });
   }

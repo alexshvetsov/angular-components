@@ -6,9 +6,9 @@ import { StyleItemDirective } from './style-item.directive';
   selector: '[appGridBox]',
 })
 export class GridBoxDirective extends StyleItemDirective {
-  @Input('appGridBox') flexConfig!: GridBox;
+  @Input('appGridBox') flexConfig!: GridBox | undefined;
 
-  get styleConfig(): GridBox {
+  get styleConfig(): GridBox | undefined {
     return this.flexConfig;
   }
 

@@ -7,5 +7,5 @@ export interface FormConfig {
   onSubmit: () => void;
   submitButtonText?: string;
   flexBoxConfig?:FlexBox;
-  grinBoxConfig?:GridBox;
+  gridBoxConfig?:GridBox;
 }

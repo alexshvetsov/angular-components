@@ -1,21 +1,13 @@
-<div [ngSwitch]="input.type">
-    
-    <!-- Text Input -->
-    <ng-container *ngSwitchCase="'text'">
-      <app-text-input [control]="control" [input]="input"></app-text-input>
-    </ng-container>
-    
-    <!-- Number Input -->
-    <ng-container *ngSwitchCase="'number'">
-      <app-number-input [control]="control" [input]="input"></app-number-input>
-    </ng-container>
-    
-    <!-- Select Input -->
-    <ng-container *ngSwitchCase="'select'">
-      <app-select-input [control]="control" [input]="input"></app-select-input>
-    </ng-container>
-    
-    <!-- Fallback case -->
-    <div *ngSwitchDefault>Unsupported input type</div>
+<div [appGridItem]="input.gridOptions" [appFlexItem]="input.flexOptions">
+  <ng-container *ngIf="isTextInput(input)">
+    <app-text-input [control]="control" [input]="input"></app-text-input>
+  </ng-container>
 
+  <ng-container *ngIf="isNumberInput(input)">
+    <app-number-input [control]="control" [input]="input"></app-number-input>
+  </ng-container>
+
+  <ng-container *ngIf="isSelectInput(input)">
+    <app-select-input [control]="control" [input]="input"></app-select-input>
+  </ng-container>
 </div>

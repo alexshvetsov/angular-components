@@ -6,9 +6,9 @@ import { StyleItemDirective } from './style-item.directive';
   selector: '[appFlexItem]',
 })
 export class FlexItemDirective extends StyleItemDirective {
-  @Input('appFlexItem') flexConfig!: FlexItem;
+  @Input('appFlexItem') flexConfig!: FlexItem | undefined;
 
-  get styleConfig(): FlexItem {
+  get styleConfig(): FlexItem | undefined{
     return this.flexConfig;
   }
 

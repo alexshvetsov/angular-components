@@ -5,10 +5,10 @@ import { StyleItemDirective } from './style-item.directive';
 @Directive({
   selector: '[appGridItem]',
 })
-export class GridItemDirective extends StyleItemDirective  {
-  @Input('appGridItem') flexConfig!: GridItem;
+export class GridItemDirective extends StyleItemDirective {
+  @Input('appGridItem') flexConfig!: GridItem | undefined;
 
-  get styleConfig(): GridItem {
+  get styleConfig(): GridItem | undefined {
     return this.flexConfig;
   }
 

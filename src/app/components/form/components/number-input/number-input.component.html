@@ -1,12 +1,10 @@
 <!-- number-input.component.html -->
 <mat-form-field appearance="fill">
-    <mat-label>{{input.label}}</mat-label>
-    <input matInput 
-           type="number"
-           [formControl]="control" 
-           [placeholder]="input.placeholder"
-           [min]="input.min"
-           [max]="input.max"
-           [step]="input.step" />
-  </mat-form-field>
-  
+  <mat-label>{{ input.label }}</mat-label>
+  <input
+    matInput
+    type="number"
+    [formControl]="control"
+    [placeholder]="input.placeholder || input.label || ''"
+  />
+</mat-form-field>

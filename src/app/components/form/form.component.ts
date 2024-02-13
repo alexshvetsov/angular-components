@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormConfig } from './types/form-congif';
 import { Observable } from 'rxjs';
 import { BaseInput } from './types/base-input';
@@ -10,24 +15,31 @@ import { FormControl, FormGroup } from '@angular/forms';
   standalone: false,
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FormService],
 })
 export class FormComponent implements OnInit {
   @Input() formConfig!: FormConfig;
   inputs$: Observable<BaseInput[]> = this.formService.inputs.value$;
-  formGroup: FormGroup = this.formService.formGroup;
+  formGroup$: Observable<FormGroup> = this.formService.formGroup?.value$;
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: FormService) {
+    console.log(this.formConfig);
+  }
 
   ngOnInit(): void {}
 
-  getFormControl(controlName: string): FormControl {
-    const control = this.formGroup.get(controlName) as FormControl;
+  getFormControl(formGroup: FormGroup, controlName: string): FormControl {
+    const control = formGroup.get(controlName) as FormControl;
     if (!control) {
       throw new Error(
         `FormControl with name '${controlName}' does not exist in the FormGroup.`
       );
     }
     return control;
+  }
+
+  getFromService(): FormService {
+    return this.formService;
   }
 }

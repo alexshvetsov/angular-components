@@ -12,7 +12,10 @@ import { GenericTableService } from './components/generic-table/generic-table.se
 import { BehaviorSubject, skip } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FoldableCardComponent } from './components/foldable-card/foldable-card.component';
-import { FormModule } from './components/form/form.module';
+import { GenericFormModule } from './components/form/generic-form.module';
+import { FormComponent } from './components/form/form.component';
+import { FormService } from './components/form/form.service';
+import { FormConfig } from './components/form/types/form-congif';
 interface TableData {
   firstName: string;
   lastName: string;
@@ -23,7 +26,13 @@ interface TableData {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GenericTableModule, CommonModule, FoldableCardComponent, FormModule],
+  imports: [
+    RouterOutlet,
+    GenericTableModule,
+    CommonModule,
+    FoldableCardComponent,
+    GenericFormModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -89,7 +98,39 @@ export class AppComponent implements AfterViewInit {
       type: 'date',
     },
   ];
-  data: BehaviorSubject<TableData[]> = new BehaviorSubject([...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows,...this.rows]);
+  data: BehaviorSubject<TableData[]> = new BehaviorSubject([
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+    ...this.rows,
+  ]);
+
+  formConfig: FormConfig = {
+    inputs: [
+      { type: 'text', name: 'name', label: 'שם', value: 'גילי' },
+      { type: 'select', name: 'last', label: 'שם', value: 'גילי' },
+    ],
+    onSubmit: () => {
+      console.log('submit');
+    },
+  };
+  @ViewChild(FormComponent) formComponent!: FormComponent;
+  formService!: FormService;
 
   ngAfterViewInit(): void {
     this.config = {
@@ -106,19 +147,31 @@ export class AppComponent implements AfterViewInit {
         rowsPerPage: 10,
       },
     };
-    this.genericTableService = this.tableComponent.getService();
+    this.genericTableService = this.tableComponent.getTableService();
     this.genericTableService.initTable(this.config);
 
- this.genericTableService.getTableEvents().pipe(
-      skip(1)).subscribe(([sortingStatus, itemsPerPage, pageNumber,searchValue,filters]) => {
-      console.log('filters', filters);
-      const random = Math.floor(Math.random() * 4);
-      this.data.next([this.rows[random]]);
+    this.genericTableService
+      .getTableEvents()
+      .pipe(skip(1))
+      .subscribe(
+        ([sortingStatus, itemsPerPage, pageNumber, searchValue, filters]) => {
+          console.log('filters', filters);
+          const random = Math.floor(Math.random() * 4);
+          this.data.next([this.rows[random]]);
+        }
+      );
+
+    this.formService = this.formComponent.getFromService();
+    this.formService.initFormService(this.formConfig.inputs);
+    this.formService.selectOptions.updateValues({last: [{value: '1', label: '1'}, {value: '2', label: '2'}]});
+    this.formService.emitFormChanges().subscribe((value) => {
+      console.log('form value', value);
     });
+
   }
 
- filterUpdate($event:any):void{
-  console.log('filterUpdate',$event.target.value);
-  this.genericTableService.filters.value$ = {s:$event.target.value}; 
- }
+  filterUpdate($event: any): void {
+    console.log('filterUpdate', $event.target.value);
+    this.genericTableService.filters.value$ = { s: $event.target.value };
+  }
 }

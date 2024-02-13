@@ -5,10 +5,10 @@ import { StyleItemDirective } from './style-item.directive';
 @Directive({
   selector: '[appFlexBox]',
 })
-export class FlexBoxDirective extends StyleItemDirective  {
-  @Input('appFlexBox') flexConfig!: FlexBox;
+export class FlexBoxDirective extends StyleItemDirective {
+  @Input('appFlexBox') flexConfig!: FlexBox | undefined;
 
-  get styleConfig(): FlexBox {
+  get styleConfig(): FlexBox | undefined {
     return this.flexConfig;
   }
 

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import BehaviorSubjectWrapper from '../../utilities/types/behaviorSubjectWrapper';
 import { BaseInput } from './types/base-input';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SelectInput, SelectOption } from './types/select-input';
 import BehaviorSubjectMap from '../../utilities/types/behaviorSubjectMap';
 import { isSelectInput } from './types/type-guard';
+import { Observable, map, merge } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,22 +14,19 @@ export class FormService {
   inputs: BehaviorSubjectWrapper<BaseInput[]> = new BehaviorSubjectWrapper<
     BaseInput[]
   >([]);
-  private _formGroup: FormGroup = {} as FormGroup;
+  formGroup: BehaviorSubjectWrapper<FormGroup> =
+    new BehaviorSubjectWrapper<FormGroup>(new FormGroup({}));
   selectOptions: BehaviorSubjectMap<SelectOption[]> = new BehaviorSubjectMap<
     SelectOption[]
   >({});
 
   constructor(private fb: FormBuilder) {}
-  //  consider to create a hash map for inputs like for select options so that input will rerender better consuder making new class to extend tha bsMAp
 
-  get formGroup(): FormGroup {
-    return this.formGroup;
-  }
   initFormService(inputs: BaseInput[]): void {
     const group: FormGroup = this.fb.group({});
     this.initSelectOptions(inputs);
     this.initControls(inputs, group);
-    this._formGroup = group;
+    this.formGroup.value$ = group;
     this.inputs.value$ = inputs;
   }
 
@@ -52,5 +50,20 @@ export class FormService {
     this.selectOptions.updateValues(selectOptions);
   }
 
+  emitFormChanges(): Observable<any> {
+    // Collect observables for each control's value changes
+    const controlChanges = Object.keys(this.formGroup.value.controls).map(
+      (controlName) => {
+        return this.formGroup.value.get(controlName)?.valueChanges.pipe(
+          map((newValue) => ({
+            name: controlName,
+            value: newValue,
+          }))
+        );
+      }
+    );
 
+    // Merge all control change observables into one
+    return merge(...controlChanges);
+  }
 }

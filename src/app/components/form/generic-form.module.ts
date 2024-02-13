@@ -5,11 +5,10 @@ import { AutocompleteInputComponent } from './components/autocomplete-input/auto
 import { SelectInputComponent } from './components/select-input/select-input.component';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { AngularMaterialModule } from '../../utilities/modules/angular-material/angular-material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { SharedModule } from '../../utilities/modules/shared/shared.module';
 import { InputComponent } from './components/input/input.component';
-import { FormService } from './form.service';
 
 @NgModule({
   declarations: [
@@ -23,11 +22,10 @@ import { FormService } from './form.service';
   imports: [
     CommonModule,
     AngularMaterialModule,
-    FormModule,
+    FormsModule,
     ReactiveFormsModule,
     SharedModule
   ],
   exports: [FormComponent],
-  providers:[FormService]
 })
-export class FormModule {}
+export class GenericFormModule {}

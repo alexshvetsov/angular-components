@@ -1,6 +1,6 @@
-import { NumberInput } from '@angular/cdk/coercion';
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { NumberInput } from '../../types/number-input';
 
 @Component({
   selector: 'app-number-input',

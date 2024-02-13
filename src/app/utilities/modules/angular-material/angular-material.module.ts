@@ -22,10 +22,8 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatCheckboxModule,
     MatCardModule,
-    // More Angular Material modules here
   ],
   exports: [
-    // Export Angular Material modules
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
@@ -33,7 +31,6 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatCheckboxModule,
     MatCardModule,
-    // More Angular Material modules here
   ]
 })
 export class AngularMaterialModule { }
