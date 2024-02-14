@@ -24,10 +24,12 @@ export class FormComponent implements OnInit {
   formGroup$: Observable<FormGroup> = this.formService.formGroup?.value$;
 
   constructor(private formService: FormService) {
-    console.log(this.formConfig);
   }
 
-  ngOnInit(): void {}
+ngOnInit(): void {
+    console.log(this.formConfig);
+
+  }
 
   getFormControl(formGroup: FormGroup, controlName: string): FormControl {
     const control = formGroup.get(controlName) as FormControl;

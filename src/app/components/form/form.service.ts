@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import BehaviorSubjectWrapper from '../../utilities/types/behaviorSubjectWrapper';
 import { BaseInput } from './types/base-input';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SelectInput, SelectOption } from './types/select-input';
 import BehaviorSubjectMap from '../../utilities/types/behaviorSubjectMap';
 import { isSelectInput } from './types/type-guard';
-import { Observable, map, merge } from 'rxjs';
+import { Observable, Subject, map, merge, startWith, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class FormService {
   selectOptions: BehaviorSubjectMap<SelectOption[]> = new BehaviorSubjectMap<
     SelectOption[]
   >({});
-
+  private formUpdateTrigger = new Subject<void>();
   constructor(private fb: FormBuilder) {}
 
   initFormService(inputs: BaseInput[]): void {
@@ -51,19 +51,36 @@ export class FormService {
   }
 
   emitFormChanges(): Observable<any> {
-    // Collect observables for each control's value changes
-    const controlChanges = Object.keys(this.formGroup.value.controls).map(
-      (controlName) => {
-        return this.formGroup.value.get(controlName)?.valueChanges.pipe(
-          map((newValue) => ({
-            name: controlName,
-            value: newValue,
-          }))
+    return this.formUpdateTrigger.pipe(
+      startWith(null),
+      switchMap(() => {
+        const controlChanges = Object.keys(this.formGroup.value.controls).map(
+          (controlName) => {
+            return this.formGroup.value.get(controlName)?.valueChanges.pipe(
+              map((newValue) => ({
+                name: controlName,
+                value: newValue,
+              }))
+            );
+          }
         );
-      }
+        return merge(...controlChanges);
+      })
     );
+  }
 
-    // Merge all control change observables into one
-    return merge(...controlChanges);
+  triggerFormUpdate() {
+    this.formUpdateTrigger.next();
+  }
+
+  addControl(name: string, control?: FormControl): void {
+    this.formGroup.value.addControl(name, control || new FormControl(''));
+  }
+  removeControl(name: string): void {
+    this.formGroup.value.removeControl(name);
+  }
+
+  updateInputs(inputs: BaseInput[]): void {
+    this.inputs.value$ = [...inputs];
   }
 }

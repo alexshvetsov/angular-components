@@ -1,0 +1,10 @@
+<ng-container *ngIf="formConfigs">
+  <div>
+    <ng-container *ngFor="let formConfig of formConfigs">
+      <app-foldable-card [title]="formConfig.name">
+        <app-form [formConfig]="formConfig" />
+      </app-foldable-card>
+    </ng-container>
+    <button (click)="submitForm()">asdasd</button>
+  </div>
+</ng-container>

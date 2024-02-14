@@ -1,0 +1,30 @@
+{"advenced-table-data":[
+    {
+      "firstName": "'John",
+      "lastName": "'Doe",
+      "id": 1,
+      "img": "url_to_image_1.jpg",
+      "date": "2020-01-31T14:22:23.123Z"
+    },
+    {
+      "firstName": "'Jane",
+      "lastName": "'Doe",
+      "id": 2,
+      "img":"url_to_image_2.jpg",
+      "date": "2020-01-31T14:22:23.123Z" 
+    },
+    {
+      "firstName": "'Alice",
+      "lastName": "'Smith",
+      "id": 3,
+      "img":"url_to_image_3.jpg",
+      "date": "2020-01-31T14:22:23.123Z" 
+    },
+    {
+      "firstName": "'Bob",
+      "lastName": "'Brown",
+      "id": 4,
+      "img":"url_to_image_4.jpg",
+      "date": "2020-01-31T14:22:23.123Z" 
+    }
+  ]}

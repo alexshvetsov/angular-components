@@ -15,9 +15,7 @@ export class InputComponent {
   @Input() input!: BaseInput;
   @Input() control!: FormControl;
 
-  constructor() {
-    console.log(this.input);
-  }
+  constructor() {}
 
   isSelectInput(input: BaseInput): input is SelectInput {
     return input.type === 'select';
