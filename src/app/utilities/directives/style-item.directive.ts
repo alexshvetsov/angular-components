@@ -1,8 +1,14 @@
-import { Directive, ElementRef, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Renderer2,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 
 @Directive()
 export abstract class StyleItemDirective implements OnChanges {
-  abstract get styleConfig(): { [key: string]: any } | undefined ;
+  abstract get styleConfig(): { [key: string]: any } | undefined;
 
   constructor(protected el: ElementRef, protected renderer: Renderer2) {}
 
@@ -11,11 +17,17 @@ export abstract class StyleItemDirective implements OnChanges {
       this.applyStyles();
     }
   }
-
   protected applyStyles(): void {
-    const element = this.el.nativeElement;
-    this.styleConfig && Object.entries(this.styleConfig).forEach(([key, value]) => {
-      this.renderer.setStyle(element, key, value);
-    });
+    Object.entries(this.styleConfig || {}).forEach(
+      ([styleName, styleValue]) => {
+        this.renderer.setStyle(this.el.nativeElement, styleName, styleValue);
+      }
+    );
   }
+  // protected applyStyles(): void {
+  //   const element = this.el.nativeElement;
+  //   this.styleConfig && Object.entries(this.styleConfig).forEach(([key, value]) => {
+  //     this.renderer.setStyle(element, key, value);
+  //   });
+  // }
 }

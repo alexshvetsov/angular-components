@@ -5,6 +5,7 @@ import { BaseInput } from './base-input';
 export interface FormConfig {
   inputs: BaseInput[];
   onSubmit: () => void;
+  name: string;
   submitButtonText?: string;
   flexBoxConfig?:FlexBox;
   gridBoxConfig?:GridBox;

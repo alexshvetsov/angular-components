@@ -9,6 +9,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericTableHeaderComponent } from './components/generic-table-header/generic-table-header.component';
 import { FoldableCardComponent } from '../foldable-card/foldable-card.component';
+import { AdvancedSearchComponent } from '../advanced-search/advanced-search.component';
+import { GenericFormModule } from '../form/generic-form.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { FoldableCardComponent } from '../foldable-card/foldable-card.component'
     TableHeaderComponent,
     PaginationComponent,
     GenericTableHeaderComponent,
+    AdvancedSearchComponent,
   ],
   imports: [
     CommonModule,
@@ -24,6 +27,7 @@ import { FoldableCardComponent } from '../foldable-card/foldable-card.component'
     FormsModule,
     ReactiveFormsModule,
     FoldableCardComponent,
+    GenericFormModule,
   ],
   exports: [
     GenericTableComponent,
@@ -31,6 +35,7 @@ import { FoldableCardComponent } from '../foldable-card/foldable-card.component'
     TableHeaderComponent,
     PaginationComponent,
     GenericTableHeaderComponent,
+    AdvancedSearchComponent,
   ],
   providers: [GenericTableService],
 })
