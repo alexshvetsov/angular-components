@@ -17,15 +17,22 @@ import { InputComponent } from './components/input/input.component';
     SelectInputComponent,
     TextInputComponent,
     NumberInputComponent,
-    InputComponent
+    InputComponent,
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
-  exports: [FormComponent],
+  exports: [
+    FormComponent,
+    AutocompleteInputComponent,
+    SelectInputComponent,
+    TextInputComponent,
+    NumberInputComponent,
+    InputComponent,
+  ],
 })
 export class GenericFormModule {}

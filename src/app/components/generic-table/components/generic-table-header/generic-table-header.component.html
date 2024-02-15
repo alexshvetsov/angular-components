@@ -1,13 +1,60 @@
-<div class="container" fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="container__data">dsfasfasd</div>
-    <div class="container__filters" fxFlex="40" fxLayout="row">
-      <input type="text" placeholder="חיפוש" [formControl]="searchControl" name="search"/>
-      <p (click)="toggleTooltip($event)">חיפוש מתקדם</p>
-      <!-- export this logic into directive of the tooltip -->
+<ng-container *ngIf="tableConfig$ | async as tableConfig">
+  <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="container__data" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1rem">
+      <div fxLayoutAlign="center center" fxLayoutGap="1rem">
+        <mat-icon class="container__data__icon">{{
+          tableConfig.tableHeaderData?.icon
+        }}</mat-icon>
+        <span class="container__data__title">{{
+          tableConfig.tableHeaderData?.title
+        }}</span>
+      </div>
+      <div fxLayout="row" fxLayoutGap="1rem">
+        <ng-container
+          *ngFor="let keyvalue of tableConfig.tableHeaderData?.subHeadlines"
+        >
+          <app-key-value [keyValue]="keyvalue" seperator=":"></app-key-value>
+        </ng-container>
+      </div>
+    </div>
+
+    <div
+      class="container__filters"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="1rem"
+    >
+      <div
+        class="container__filters__input-container"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        fxLayoutGap="1rem"
+      >
+        <input type="text" [formControl]="searchControl" />
+        <mat-icon>search</mat-icon>
+      </div>
+
+      <div
+        class="container__filters__advanced"
+        (click)="toggleTooltip($event)"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="1rem"
+      >
+        <span>חיפוש מתקדם</span>
+        <span>{{ tooltipOpen ? "&#11165;" : "&#11167;" }}</span>
+      </div>
+
       <div *ngIf="tooltipOpen" class="tooltip-content" #tooltipRef>
         <ng-content></ng-content>
       </div>
     </div>
+
+    <ng-container *ngIf="tableConfig.tableHeaderData?.exportExcel">
+      <div class="container__actions">
+        <mat-icon>search</mat-icon>
+      </div>
+    </ng-container>
   </div>
-  
+</ng-container>
 <div *ngIf="tooltipOpen" class="overlay" (click)="closeTooltip()"></div>

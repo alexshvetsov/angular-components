@@ -23,13 +23,9 @@ export class FormComponent implements OnInit {
   inputs$: Observable<BaseInput[]> = this.formService.inputs.value$;
   formGroup$: Observable<FormGroup> = this.formService.formGroup?.value$;
 
-  constructor(private formService: FormService) {
-  }
+  constructor(private formService: FormService) {}
 
-ngOnInit(): void {
-    console.log(this.formConfig);
-
-  }
+  ngOnInit(): void {}
 
   getFormControl(formGroup: FormGroup, controlName: string): FormControl {
     const control = formGroup.get(controlName) as FormControl;

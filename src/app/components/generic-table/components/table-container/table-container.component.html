@@ -1,0 +1,29 @@
+<ng-container *ngIf="tableConfig$ | async as tableConfig">
+  <table class="table" [appTableStyle]="tableConfig.style || 'defualt'">
+    <thead>
+      <tr>
+        <ng-container *ngIf="storingStatus$ | async as storingStatus">
+          <ng-container *ngFor="let column of columns$ | async">
+            <th>
+              <app-table-header
+                [column]="column"
+                [sorted]="storingStatus.column === column.key"
+                [isAsc]="storingStatus.isASC"
+              ></app-table-header>
+            </th>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody class="tbody">
+      <tr class="tbody-row" *ngFor="let row of data">
+        <td class="tbody-cell" *ngFor="let column of columns$ | async">
+          <app-table-cell
+            [data]="row[column.key]"
+            [columnType]="column.type"
+          ></app-table-cell>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

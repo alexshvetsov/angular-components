@@ -1,0 +1,16 @@
+.table {
+    box-sizing: border-box;
+    width: 100%;
+
+    tbody {
+      border: 1px solid #a91222;
+    
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: white;
+    }
+    
+  }

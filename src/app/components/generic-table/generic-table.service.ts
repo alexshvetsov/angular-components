@@ -5,6 +5,9 @@ import BehaviorSubjectWrapper from '../../utilities/types/behaviorSubjectWrapper
 import { Observable, combineLatest } from 'rxjs';
 
 export class GenericTableService {
+  public tableConfig: BehaviorSubjectWrapper<TableConfig> = new BehaviorSubjectWrapper<TableConfig>(
+    {} as TableConfig
+  );
   public columns: BehaviorSubjectWrapper<Column[]> = new BehaviorSubjectWrapper<
     Column[]
   >([]);
@@ -24,6 +27,7 @@ export class GenericTableService {
   constructor() {}
 
   public initTable(tableConfig: TableConfig): void {
+    this.tableConfig.value$ = tableConfig;
     this.sortingStatus.value$ = tableConfig.sortingStatus;
     this.columns.value$ = tableConfig.columns;
     this.pagination.value$ = tableConfig.pagination || null;
@@ -33,6 +37,7 @@ export class GenericTableService {
     }
   }
 
+  
   public getTableEvents(): Observable<
     [SortingStatus, number, number, string, { [key: string]: string }]
   > {

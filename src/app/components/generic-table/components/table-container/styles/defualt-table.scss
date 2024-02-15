@@ -1,0 +1,26 @@
+.default-table {
+  box-sizing: border-box;
+  width: 100%;
+  border-collapse: collapse;
+
+  .tbody {
+    overflow-y: scroll;
+    border: 1px solid #12a9a7;
+    &-row {
+      background-color: var(--table-blue);
+      &:nth-child(even) {
+        background-color: var(--white);
+      }
+    }
+    &-cell {
+      padding: 10px;
+      border: 1px solid black;
+    }
+  }
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--grey);
+  }
+}

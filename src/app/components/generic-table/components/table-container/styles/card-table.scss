@@ -1,0 +1,17 @@
+.card-table {
+    box-sizing: border-box;
+    width: 100%;
+
+    tbody {
+      overflow-y: scroll;
+      border: 1px solid #180bd4;
+    
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: rgb(21, 234, 9);
+    }
+    
+  }

@@ -11,6 +11,10 @@ import { GenericTableHeaderComponent } from './components/generic-table-header/g
 import { FoldableCardComponent } from '../foldable-card/foldable-card.component';
 import { AdvancedSearchComponent } from '../advanced-search/advanced-search.component';
 import { GenericFormModule } from '../form/generic-form.module';
+import { TableContainerComponent } from './components/table-container/table-container.component';
+import { TableStyleDirective } from './directives/table-style.directive';
+import { MatIconModule } from '@angular/material/icon';
+import { KeyValueComponent } from '../key-value/key-value.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,8 @@ import { GenericFormModule } from '../form/generic-form.module';
     PaginationComponent,
     GenericTableHeaderComponent,
     AdvancedSearchComponent,
+    TableContainerComponent,
+    TableStyleDirective,
   ],
   imports: [
     CommonModule,
@@ -28,6 +34,8 @@ import { GenericFormModule } from '../form/generic-form.module';
     ReactiveFormsModule,
     FoldableCardComponent,
     GenericFormModule,
+    MatIconModule,
+    KeyValueComponent,
   ],
   exports: [
     GenericTableComponent,
@@ -36,6 +44,7 @@ import { GenericFormModule } from '../form/generic-form.module';
     PaginationComponent,
     GenericTableHeaderComponent,
     AdvancedSearchComponent,
+    TableContainerComponent,
   ],
   providers: [GenericTableService],
 })

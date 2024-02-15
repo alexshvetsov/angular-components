@@ -1,7 +1,7 @@
 <div class="card" [ngClass]="{ folded: isFolded }">
-  <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+  <div (click)="toggleFold()" class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
     <p>{{ cardTitle }}</p>
-    <span (click)="toggleFold()">{{ isFolded ? "&#11165;" : "&#11167;" }}</span>
+    <span >{{ isFolded ? "&#11165;" : "&#11167;" }}</span>
   </div>
   <div class="card-body">
     <ng-content></ng-content>

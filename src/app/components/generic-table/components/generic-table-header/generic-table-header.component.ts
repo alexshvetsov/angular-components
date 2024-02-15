@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, Observable, Subscription } from 'rxjs';
 import { GenericTableService } from '../../generic-table.service';
+import { TextInput } from '../../../form/types/text-input';
+import { TableConfig } from '../../types/table';
 
 @Component({
   selector: 'app-generic-table-header',
@@ -10,7 +12,9 @@ import { GenericTableService } from '../../generic-table.service';
   styleUrl: './generic-table-header.component.scss',
 })
 export class GenericTableHeaderComponent {
+  tableConfig$!: Observable<TableConfig>;
   searchControl: FormControl = new FormControl('');
+  searchInput: TextInput = { type: 'text', placeholder: 'Search', value: '', name: 'search'};
   tooltipOpen: boolean = false;
 
   private searchSubscription$!: Subscription;
@@ -18,6 +22,7 @@ export class GenericTableHeaderComponent {
   constructor(private genericTableService: GenericTableService) {}
 
   ngOnInit(): void {
+    this.tableConfig$ = this.genericTableService.tableConfig.value$;
     this.searchSubscription$ = this.searchControl.valueChanges
       .pipe(
         filter((value) => !!value && value.length > 2),

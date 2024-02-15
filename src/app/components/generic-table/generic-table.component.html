@@ -1,37 +1,10 @@
-<div class="container">
-  <div class="container__table-container">
-    <app-generic-table-header>
-      <ng-content></ng-content>
-    </app-generic-table-header>
-    <table class="container__table-container__table">
-      <thead>
-        <tr>
-          <ng-container *ngIf="storingStatus$ | async as storingStatus">
-            <ng-container *ngFor="let column of columns$ | async">
-              <th>
-                <app-table-header
-                  [column]="column"
-                  [sorted]="storingStatus.column === column.key"
-                  [isAsc]="storingStatus.isASC"
-                ></app-table-header>
-              </th>
-            </ng-container>
-          </ng-container>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of data">
-          <td *ngFor="let column of columns$ | async">
-            <app-table-cell
-              [data]="row[column.key]"
-              [columnType]="column.type"
-            ></app-table-cell>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="container" fxLayout="column">
+  <app-generic-table-header>
+    <ng-content></ng-content>
+  </app-generic-table-header>
+  <div class="container__table-container" fxFlex="grow">
+    <app-table-container [data]="data" />
   </div>
-
   <ng-container *ngIf="pagination$ | async as pagination">
     <app-pagination
       class="container__pagination"

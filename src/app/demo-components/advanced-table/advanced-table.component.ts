@@ -47,12 +47,12 @@ export class AdvancedTableComponent implements OnInit, AfterViewInit {
     this.data = this.advancedTableService.data.value$;
     this.formConfigs = this.advancedTableService.formConfigs;
     this.advancedTableService.getTableData().subscribe();
-
   }
 
   ngAfterViewInit(): void {
     this.config = {
       columns: this.columns,
+      style: 'default',
       sortingStatus: {
         sorted: true,
         isASC: true,
@@ -64,6 +64,15 @@ export class AdvancedTableComponent implements OnInit, AfterViewInit {
         totalItemsCount: 10,
         rowsPerPage: 10,
       },
+      tableHeaderData: {
+        title: 'טבלת דוגמא',
+        icon: 'home',
+        subHeadlines: [
+          { headline: 'כותרת', value: 'ערך' },
+          { headline: 'כותרת', value: 'ערך' },
+          { headline: 'כותרת', value: 'ערך' },
+        ],
+      }
     };
     this.genericTableService = this.tableComponent.getTableService();
     this.genericTableService.initTable(this.config);

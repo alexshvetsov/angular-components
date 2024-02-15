@@ -1,4 +1,11 @@
-<mat-form-field appearance="fill">
+<mat-form-field [appearance]="input.appereance || 'fill'">
   <mat-label>{{ input.label }}</mat-label>
-  <input matInput [formControl]="control" [placeholder]="input.placeholder!" />
+  <mat-icon *ngIf="showPrefixIcon" matPrefix>{{ showPrefixIcon }}</mat-icon>
+
+  <input
+    matInput
+    [formControl]="control"
+    [placeholder]="input.placeholder || ''"
+  />
+  <mat-icon *ngIf="showSuffixIcon" matSuffix>{{ showSuffixIcon }}</mat-icon>
 </mat-form-field>

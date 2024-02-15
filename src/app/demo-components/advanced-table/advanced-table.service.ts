@@ -15,6 +15,7 @@ export class AdvancedTableService {
   data: BehaviorSubjectWrapper<TableData[]> = new BehaviorSubjectWrapper<
     TableData[]
   >([]);
+
   private _formConfig: FormConfig = {
     name: 'search',
     inputs: [
@@ -25,6 +26,7 @@ export class AdvancedTableService {
       console.log('submit');
     },
   };
+
   private _formConfigs: FormConfig[] = [
     this._formConfig,
     {
@@ -61,14 +63,17 @@ export class AdvancedTableService {
       type: 'date',
     },
   ];
+
   constructor(private http$: HttpClient) {}
 
   get rows(): TableData[] {
     return this._rows;
   }
+
   get formConfigs(): FormConfig[] {
     return this._formConfigs;
   }
+
   get columns(): Column[] {
     return this._columns;
   }
@@ -78,7 +83,23 @@ export class AdvancedTableService {
       .get<TableData[]>('http://localhost:3000/advenced-table-data')
       .pipe(
         tap((data) => {
-          this.data.value$ = data;
+          this.data.value$ = [
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+            ...data,
+          ];
         })
       );
   }
